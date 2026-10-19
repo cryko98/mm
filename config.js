@@ -21,30 +21,22 @@ window.MM_CONFIG = {
     ENDPOINT: "",
   },
 
-  // ── The 20 ghosts ──────────────────────────────────────────
-  // image: path to the NFT art (all use the genesis art until the set is drawn)
-  // hue:   colour shift applied to the art so each ghost reads differently
+  // ── The 12 ghosts ──────────────────────────────────────────
+  // image:   the NFT art (assets/nft/XX.png)
+  // hue:     optional colour shift (0 = as drawn)
   // claimed: set to a wallet string once that ghost is gone
   NFTS: [
-    { id: 1,  name: "The Spark",       hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 2,  name: "Night Shift",     hue: 200,  image: "assets/mm.jpg", claimed: null },
-    { id: 3,  name: "Green Candle",    hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 4,  name: "Coffee Break",    hue: 35,   image: "assets/mm.jpg", claimed: null },
-    { id: 5,  name: "Still Here",      hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 6,  name: "Headphones On",   hue: 275,  image: "assets/mm.jpg", claimed: null },
-    { id: 7,  name: "The Other Ghost", hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 8,  name: "Bonding Curve",   hue: 160,  image: "assets/mm.jpg", claimed: null },
-    { id: 9,  name: "Rekt & Back",     hue: -40,  image: "assets/mm.jpg", claimed: null },
-    { id: 10, name: "Trench Rat",      hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 11, name: "Creator Fee",     hue: 60,   image: "assets/mm.jpg", claimed: null },
-    { id: 12, name: "Holder Reward",   hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 13, name: "Callout",         hue: 320,  image: "assets/mm.jpg", claimed: null },
-    { id: 14, name: "Referral",        hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 15, name: "Mint Green",      hue: 20,   image: "assets/mm.jpg", claimed: null },
-    { id: 16, name: "10:58 PM",        hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 17, name: "Five Lines",      hue: 120,  image: "assets/mm.jpg", claimed: null },
-    { id: 18, name: "No Chart",        hue: 0,    image: "assets/mm.jpg", claimed: null },
-    { id: 19, name: "Pale Flame",      hue: 240,  image: "assets/mm.jpg", claimed: null },
-    { id: 20, name: "The Minted One",  hue: 0,    image: "assets/mm.jpg", claimed: null },
+    { id: 1,  name: "Classic Pump", hue: 0, image: "assets/nft/01.png", claimed: null },
+    { id: 2,  name: "Beanie Pump",  hue: 0, image: "assets/nft/02.png", claimed: null },
+    { id: 3,  name: "Halo Pump",    hue: 0, image: "assets/nft/03.png", claimed: null },
+    { id: 4,  name: "Spiky Pump",   hue: 0, image: "assets/nft/04.png", claimed: null },
+    { id: 5,  name: "Goblin Pump",  hue: 0, image: "assets/nft/05.png", claimed: null },
+    { id: 6,  name: "Ghost Pump",   hue: 0, image: "assets/nft/06.png", claimed: null },
+    { id: 7,  name: "Glitch Pump",  hue: 0, image: "assets/nft/07.png", claimed: null },
+    { id: 8,  name: "Cat Pump",     hue: 0, image: "assets/nft/08.png", claimed: null },
+    { id: 9,  name: "Dog Pump",     hue: 0, image: "assets/nft/09.png", claimed: null },
+    { id: 10, name: "Robot Pump",   hue: 0, image: "assets/nft/10.png", claimed: null },
+    { id: 11, name: "Pink Pump",    hue: 0, image: "assets/nft/11.png", claimed: null },
+    { id: 12, name: "Shadow Pump",  hue: 0, image: "assets/nft/12.png", claimed: null },
   ],
 };

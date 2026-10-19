@@ -152,7 +152,7 @@
     ring.appendChild(t);
   }
 
-  /* ── VAULT: 20 ghosts, holders only, one each ───────── */
+  /* ── VAULT: 12 ghosts, holders only, one each ───────── */
   const CL = Object.assign({ DEV_MODE: true, MIN_HOLD: 1, RPC: 'https://api.mainnet-beta.solana.com', ENDPOINT: '' }, C.CLAIM || {});
   const LS_KEY = 'mm_claims_v1';
   const localClaims = (() => { try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch (_) { return {}; } })();
@@ -209,7 +209,7 @@
     else pv.innerHTML = `<div class="claim__empty"><img src="assets/mm.jpg" alt="" /><span>PICK A GHOST</span></div>`;
     $('#claimName').textContent = n ? `#${pad(n.id)} ${n.name}` : '—';
     const l = left();
-    $('#claimLeft').textContent = l; $('#heroLeft').textContent = l;
+    $('#claimLeft').textContent = l; $('#heroLeft').textContent = l; const ct = $('#claimTotal'); if (ct) ct.textContent = NFTS.length;
     $('#claimBar').style.width = ((NFTS.length - l) / NFTS.length * 100) + '%';
     $('#claimWallet').textContent = state.wallet ? short(state.wallet) : 'not connected';
     $('#claimHold').textContent = state.balance == null ? '—' : state.balance.toLocaleString('en-US', { maximumFractionDigits: 2 });
@@ -221,7 +221,7 @@
     else if (mine) { txt.textContent = `GHOST #${pad(mine.id)} IS YOURS`; btn.disabled = true; note.textContent = 'One ghost per holder. Set it as your PFP and show up.'; }
     else if (!state.holder) { txt.textContent = 'NOT A HOLDER YET'; btn.disabled = true; note.textContent = `Hold at least ${CL.MIN_HOLD} $MM in this wallet, then reconnect.`; }
     else if (!n) { txt.textContent = 'PICK A GHOST'; btn.disabled = true; note.textContent = 'Choose any ghost that is still free.'; }
-    else if (l === 0) { txt.textContent = 'VAULT EMPTY'; btn.disabled = true; note.textContent = 'All twenty ghosts are taken. More get drawn in Phase 3.'; }
+    else if (l === 0) { txt.textContent = 'VAULT EMPTY'; btn.disabled = true; note.textContent = 'All twelve ghosts are taken. More get drawn in Phase 3.'; }
     else { txt.textContent = `CLAIM GHOST #${pad(n.id)}`; note.textContent = CL.ENDPOINT ? 'Sign the message in your wallet to claim.' : 'Demo mode: the claim is recorded in this browser until the backend is wired.'; }
   }
 

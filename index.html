@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minted Millionaires — $MM</title>
-  <meta name="description" content="Minted Millionaires ($MM). A free-mint NFT cult born from one tweet. Millionaires will be minted. Be one of them." />
+  <meta name="description" content="Minted Millionaires ($MM). 20 ghosts. Holders only. One per wallet. Born from one tweet: millionaires will be minted." />
   <meta property="og:title" content="Minted Millionaires — $MM" />
-  <meta property="og:description" content="Millionaires will be minted. Free mint. Wear the ghost." />
+  <meta property="og:description" content="20 ghosts. Holders only. One per wallet. Millionaires will be minted." />
   <meta property="og:image" content="assets/mm.jpg" />
   <meta name="theme-color" content="#06100c" />
   <link rel="icon" type="image/jpeg" href="assets/mm.jpg" />
@@ -30,9 +30,12 @@
   <!-- ░░ BACKGROUND LAYERS ░░ -->
   <canvas id="bgPixels" class="bg-canvas"></canvas>
   <canvas id="bgChart" class="bg-canvas bg-canvas--chart"></canvas>
+  <div class="noise" aria-hidden="true"></div>
   <div class="scanlines" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
   <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+  <div class="progress" id="progress" aria-hidden="true"><span></span></div>
 
   <!-- ░░ NAV ░░ -->
   <header class="nav" id="nav">
@@ -41,10 +44,10 @@
       <span class="nav__name">MINTED<br>MILLIONAIRES</span>
       <span class="nav__ticker">$MM</span>
     </a>
-    <nav class="nav__links">
+    <nav class="nav__links" id="navLinks">
       <a href="#prophecy">Prophecy</a>
       <a href="#cult">Cult</a>
-      <a href="#mint">Mint</a>
+      <a href="#vault">Vault</a>
       <a href="#ways">Five Ways</a>
       <a href="#path">Path</a>
     </nav>
@@ -53,7 +56,7 @@
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         <span>Follow</span>
       </a>
-      <a class="btn btn--primary btn--sm" href="#mint">Free Mint</a>
+      <a class="btn btn--primary btn--sm" href="#vault">Claim a Ghost</a>
     </div>
     <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </header>
@@ -63,11 +66,12 @@
     <!-- ░░ HERO ░░ -->
     <section class="hero" id="hero">
       <div class="hero__grid" aria-hidden="true"></div>
+      <div class="hero__beam" aria-hidden="true"></div>
 
       <div class="hero__inner">
         <div class="hero__copy">
           <div class="hero__tag reveal">
-            <span class="dot"></span> SOLANA · FREE MINT · PUMP.FUN LORE
+            <span class="dot"></span> SOLANA · 20 GHOSTS · HOLDERS ONLY
           </div>
 
           <h1 class="hero__title">
@@ -78,7 +82,7 @@
           <p class="hero__sub reveal">
             One tweet. Five lines. One promise:<br>
             <em>“millionaires will be minted.”</em><br>
-            We took it literally. Now we mint them.
+            We took it literally. Twenty ghosts. Hold $MM, pick yours.
           </p>
 
           <div class="ca reveal" id="caBox">
@@ -91,17 +95,17 @@
           </div>
 
           <div class="hero__cta reveal">
-            <a href="#mint" class="btn btn--primary btn--lg magnetic">
+            <a href="#vault" class="btn btn--primary btn--lg magnetic">
               <span class="btn__shine"></span>
-              MINT FOR FREE
+              CLAIM YOUR GHOST
             </a>
             <a href="#prophecy" class="btn btn--ghost btn--lg magnetic">READ THE PROPHECY</a>
           </div>
 
           <div class="hero__stats reveal">
-            <div class="stat"><span class="stat__n" data-count="10000">0</span><span class="stat__l">SUPPLY</span></div>
-            <div class="stat"><span class="stat__n">0 SOL</span><span class="stat__l">MINT PRICE</span></div>
-            <div class="stat"><span class="stat__n" data-count="5">0</span><span class="stat__l">WAYS TO BE MINTED</span></div>
+            <div class="stat"><span class="stat__n" data-count="20">0</span><span class="stat__l">GHOSTS</span></div>
+            <div class="stat"><span class="stat__n" id="heroLeft">20</span><span class="stat__l">STILL FREE</span></div>
+            <div class="stat"><span class="stat__n">1</span><span class="stat__l">PER HOLDER</span></div>
           </div>
         </div>
 
@@ -110,19 +114,23 @@
             <div class="ghost-stage__ring ring-1"></div>
             <div class="ghost-stage__ring ring-2"></div>
             <div class="ghost-stage__ring ring-3"></div>
+            <div class="orbit" aria-hidden="true">
+              <span class="orbit__dot d1"></span><span class="orbit__dot d2"></span><span class="orbit__dot d3"></span>
+            </div>
             <div class="ghost-card" id="ghostCard">
               <div class="ghost-card__frame">
-                <img src="assets/mm.jpg" alt="Minted Millionaire ghost — the founder NFT" draggable="false" />
+                <img src="assets/mm.jpg" alt="Minted Millionaire ghost — the genesis NFT" draggable="false" />
                 <div class="ghost-card__flame"></div>
                 <div class="ghost-card__shine"></div>
+                <div class="ghost-card__scan"></div>
               </div>
               <div class="ghost-card__meta">
-                <span>MINTED MILLIONAIRE #0001</span>
+                <span>GHOST #01 · THE SPARK</span>
                 <span class="chip chip--green">GENESIS</span>
               </div>
             </div>
             <div class="float-pill p1">+4,206%</div>
-            <div class="float-pill p2">MINTED ✓</div>
+            <div class="float-pill p2">HOLDER ✓</div>
             <div class="float-pill p3">$MM</div>
           </div>
         </div>
@@ -149,21 +157,36 @@
       </div>
     </div>
 
-    <!-- ░░ PROPHECY / LORE ░░ -->
+    <!-- ░░ PROPHECY ░░ -->
     <section class="section prophecy" id="prophecy">
+      <div class="bigword bigword--right" aria-hidden="true">PROPHECY</div>
+
       <div class="section__head">
         <span class="section__kicker reveal">// CHAPTER 01</span>
         <h2 class="section__title reveal">THE PROPHECY</h2>
         <p class="section__lead reveal">
-          On <strong>October 18, 2026</strong>, at 22:58 UTC, the co-founder of pump.fun posted five lines.
-          No image. No chart. No link. Just a promise, repeated like a mantra.
+          <strong>October 18, 2026 · 22:58 UTC.</strong> The co-founder of pump.fun posts five lines.
+          No image. No chart. No link. Just a promise, repeated like a mantra — and a ghost in the trenches reads it.
         </p>
       </div>
 
-      <div class="prophecy__grid">
-        <article class="tweet reveal" id="tweetCard">
+      <!-- terminal + tweet -->
+      <div class="prophecy__stage reveal">
+        <div class="terminal" id="terminal">
+          <div class="terminal__bar">
+            <span></span><span></span><span></span>
+            <b>trenches://x.com/a1lon9 — incoming transmission</b>
+          </div>
+          <div class="terminal__body" id="terminalBody">
+            <div class="terminal__line"><i>$</i> connect --wallet ghost.sol</div>
+            <div class="terminal__line"><i>$</i> listen --timeline @a1lon9</div>
+            <div class="terminal__line terminal__line--dim">… waiting for signal …</div>
+          </div>
+        </div>
+
+        <article class="tweet" id="tweetCard">
           <div class="tweet__head">
-            <div class="tweet__avatar"><span>a</span></div>
+            <div class="tweet__avatar"><img src="assets/alon.jpg" alt="alon — co-founder of pump.fun" /></div>
             <div class="tweet__who">
               <div class="tweet__name">alon <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#1d9bf0" d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34m-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36z"/></svg></div>
               <div class="tweet__handle">@a1lon9 · co-founder @pumpfun</div>
@@ -171,11 +194,11 @@
             <svg class="tweet__x" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </div>
           <div class="tweet__body" id="tweetBody">
-            <p class="tweet__line" data-line>millionaires will be minted via <b>referrals</b></p>
-            <p class="tweet__line" data-line>millionaires will be minted via <b>memecoins</b></p>
-            <p class="tweet__line" data-line>millionaires will be minted via <b>creator fees</b></p>
-            <p class="tweet__line" data-line>millionaires will be minted via <b>holder rewards</b></p>
-            <p class="tweet__line" data-line>millionaires will be minted via <b>callout rewards</b></p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>referrals</b>.</p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>memecoins</b>.</p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>creator fees</b>.</p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>holder rewards</b>.</p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>callout rewards</b>.</p>
           </div>
           <div class="tweet__foot">
             <span>10:58 PM · Oct 18, 2026</span>
@@ -183,36 +206,50 @@
           </div>
           <a class="tweet__link" href="https://x.com/a1lon9/status/2111955227280633987" target="_blank" rel="noopener">View on X ↗</a>
         </article>
+      </div>
 
-        <div class="lore reveal">
-          <div class="lore__block">
+      <!-- lore chapters -->
+      <div class="lore">
+        <article class="chapter reveal">
+          <div class="chapter__num">01</div>
+          <div class="chapter__art">
+            <div class="chapter__img" style="--pos: 50% 8%; --hue: 0deg"><img src="assets/mm.jpg" alt="" /></div>
+            <span class="chapter__cap">THE FLAME</span>
+          </div>
+          <div class="chapter__txt">
             <h3>Every trench has its ghosts.</h3>
-            <p>
-              Thousands of wallets enter the trenches every day. Most leave with nothing but a story.
-              What's left behind is a ghost — a pale little thing haunting the bonding curves, watching candles it never caught.
-            </p>
+            <p>Thousands of wallets enter the trenches every day. Most leave with nothing but a story. What's left behind is a ghost — a pale little thing haunting the bonding curves, watching candles it never caught.</p>
           </div>
-          <div class="lore__block">
+        </article>
+
+        <article class="chapter chapter--flip reveal">
+          <div class="chapter__num">02</div>
+          <div class="chapter__art">
+            <div class="chapter__img" style="--pos: 18% 46%; --hue: 0deg"><img src="assets/mm.jpg" alt="" /></div>
+            <span class="chapter__cap">HEADPHONES ON</span>
+          </div>
+          <div class="chapter__txt">
             <h3>But one ghost caught fire.</h3>
-            <p>
-              The night the prophecy dropped, one ghost read the five lines and refused to fade.
-              Its flame turned <span class="mint">mint green</span>. It put on headphones, poured a coffee,
-              and sat back down in front of the charts. It wasn't haunting anymore. It was <em>building</em>.
-            </p>
+            <p>The night the prophecy dropped, one ghost read the five lines and refused to fade. Its flame turned <span class="mint">mint green</span>. It put on headphones, poured a coffee, and sat back down in front of the charts. It wasn't haunting anymore. It was <em>building</em>.</p>
           </div>
-          <div class="lore__block">
+        </article>
+
+        <article class="chapter reveal">
+          <div class="chapter__num">03</div>
+          <div class="chapter__art">
+            <div class="chapter__img" style="--pos: 92% 50%; --hue: 0deg"><img src="assets/mm.jpg" alt="" /></div>
+            <span class="chapter__cap">THE OTHER GHOST</span>
+          </div>
+          <div class="chapter__txt">
             <h3>Minted, not born.</h3>
-            <p>
-              A Minted Millionaire is not someone who got lucky. It's the ghost that stayed.
-              Every $MM NFT is one of those ghosts — a flame that didn't go out.
-              Mint one for free. Wear it. Let the trenches know you're still here.
-            </p>
+            <p>A Minted Millionaire is not someone who got lucky. It's the ghost that stayed. There are only twenty of them — and they don't go to whoever pays. They go to whoever <em>holds</em>. One ghost, one holder, chosen by hand.</p>
           </div>
-          <div class="lore__sig">
-            <span class="lore__sig-line"></span>
-            <span>— from the Book of the Green Flame</span>
-          </div>
-        </div>
+        </article>
+      </div>
+
+      <div class="lore__sig reveal">
+        <span class="lore__sig-line"></span>
+        <span>— from the Book of the Green Flame</span>
       </div>
     </section>
 
@@ -228,18 +265,41 @@
         </p>
       </div>
 
+      <!-- 3D carousel -->
+      <div class="ring-wrap reveal">
+        <div class="ring" id="ring"></div>
+        <div class="ring__floor"></div>
+      </div>
+
       <div class="cult__grid">
-        <div class="cult__pfp reveal">
-          <div class="xcard">
-            <div class="xcard__banner"></div>
-            <div class="xcard__avatar"><img src="assets/mm.jpg" alt="Your X profile picture — a Minted Millionaire" /></div>
-            <div class="xcard__body">
-              <div class="xcard__name">you.mm <span class="chip chip--green">MINTED</span></div>
-              <div class="xcard__handle">@your_handle</div>
-              <p class="xcard__bio">minted millionaire #<span id="pfpNum">0420</span> 👻🔥 · still here · $MM</p>
-              <div class="xcard__stats"><b>1.2K</b> Following · <b>42K</b> Followers</div>
+        <div class="feed reveal" id="feed">
+          <div class="feed__head">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>For you</span>
+          </div>
+          <div class="post">
+            <div class="post__av"><img src="assets/mm.jpg" alt="" style="filter:hue-rotate(200deg)"></div>
+            <div class="post__body">
+              <div class="post__who"><b>nightshift.mm</b> <span class="chip chip--green">#02</span> <small>@ghost_02 · 2m</small></div>
+              <p>set my pfp. timeline went green in 10 minutes. we are so back 👻🔥</p>
+              <div class="post__acts"><span>💬 48</span><span>🔁 212</span><span class="mint">♥ 1.4K</span></div>
             </div>
-            <div class="xcard__ghost-tag">PFP READY</div>
+          </div>
+          <div class="post">
+            <div class="post__av"><img src="assets/mm.jpg" alt=""></div>
+            <div class="post__body">
+              <div class="post__who"><b>thespark.mm</b> <span class="chip chip--green">#01</span> <small>@ghost_01 · 5m</small></div>
+              <p>saw the ghost in a reply. didn't know the guy. knew the flame. that's the whole point.</p>
+              <div class="post__acts"><span>💬 96</span><span>🔁 530</span><span class="mint">♥ 3.1K</span></div>
+            </div>
+          </div>
+          <div class="post">
+            <div class="post__av"><img src="assets/mm.jpg" alt="" style="filter:hue-rotate(320deg)"></div>
+            <div class="post__body">
+              <div class="post__who"><b>callout.mm</b> <span class="chip chip--green">#13</span> <small>@ghost_13 · 11m</small></div>
+              <p>20 ghosts. holders only. one each. you can't buy your way in, you can only show up. this is how cults start.</p>
+              <div class="post__acts"><span>💬 203</span><span>🔁 891</span><span class="mint">♥ 5.8K</span></div>
+            </div>
           </div>
         </div>
 
@@ -248,14 +308,14 @@
             <div class="point__ico">01</div>
             <div>
               <h3>Your PFP is your flag.</h3>
-              <p>Set your $MM ghost as your X profile picture. When ten thousand timelines light up with the same green flame, that's not a memecoin anymore. That's a movement.</p>
+              <p>Set your ghost as your X profile picture. When the timeline lights up with the same green flame, that's not a memecoin anymore. That's a movement.</p>
             </div>
           </div>
           <div class="point reveal">
             <div class="point__ico">02</div>
             <div>
-              <h3>Free to join. Impossible to fake.</h3>
-              <p>The mint costs nothing but a signature. No whitelist drama, no presale, no insiders. A cult you can't buy your way into — only show up for.</p>
+              <h3>Twenty faces. No presale.</h3>
+              <p>No whitelist drama, no insiders, no secondary pump. Twenty ghosts go to twenty holders, one each, picked by hand from the vault.</p>
             </div>
           </div>
           <div class="point reveal">
@@ -267,111 +327,118 @@
           </div>
         </div>
       </div>
-
-      <div class="wall reveal" id="wall" aria-label="The wall of minted ghosts"></div>
     </section>
 
-    <!-- ░░ MINT ░░ -->
-    <section class="section mint" id="mint">
+    <!-- ░░ VAULT / CLAIM ░░ -->
+    <section class="section vault" id="vault">
+      <div class="bigword bigword--left" aria-hidden="true">VAULT</div>
       <div class="section__head section__head--center">
         <span class="section__kicker reveal">// CHAPTER 03</span>
-        <h2 class="section__title reveal">GET MINTED</h2>
-        <p class="section__lead reveal">Zero SOL. Zero excuses. One ghost per signature.</p>
+        <h2 class="section__title reveal">THE VAULT</h2>
+        <p class="section__lead reveal">
+          Twenty ghosts. The only way to get one is right here.
+          Hold <strong>$MM</strong>, connect, pick a ghost that's still free — <strong>one per wallet</strong>.
+        </p>
       </div>
 
-      <div class="mint__panel reveal">
-        <div class="mint__preview">
-          <div class="mint__card tilt" id="mintCard">
-            <img src="assets/mm.jpg" alt="Minted Millionaire preview" draggable="false" />
-            <div class="mint__card-glare"></div>
-            <div class="mint__card-label">
-              <span>MINTED MILLIONAIRE</span>
-              <span id="mintPreviewId">#????</span>
+      <div class="gate reveal" id="gate">
+        <div class="gate__step" data-step="1"><span class="gate__n">1</span><div><b>Connect</b><small>Phantom · Solflare · Backpack</small></div></div>
+        <div class="gate__sep"></div>
+        <div class="gate__step" data-step="2"><span class="gate__n">2</span><div><b>Hold $MM</b><small id="gateHoldTxt">balance checked on-chain</small></div></div>
+        <div class="gate__sep"></div>
+        <div class="gate__step" data-step="3"><span class="gate__n">3</span><div><b>Pick a ghost</b><small>any one that's still free</small></div></div>
+        <div class="gate__sep"></div>
+        <div class="gate__step" data-step="4"><span class="gate__n">4</span><div><b>Claim</b><small>sign · it's yours</small></div></div>
+      </div>
+
+      <div class="vault__layout">
+        <div class="vault__grid" id="vaultGrid"></div>
+
+        <aside class="claim" id="claimPanel">
+          <div class="claim__preview" id="claimPreview">
+            <div class="claim__empty">
+              <img src="assets/mm.jpg" alt="" />
+              <span>PICK A GHOST</span>
             </div>
           </div>
-        </div>
-
-        <div class="mint__form">
-          <div class="mint__row">
-            <span>PRICE</span>
-            <b class="mint">FREE <small>+ network fee</small></b>
+          <div class="claim__meta">
+            <div class="claim__row"><span>SELECTED</span><b id="claimName">—</b></div>
+            <div class="claim__row"><span>LEFT</span><b><span id="claimLeft">20</span> / 20</b></div>
+            <div class="claim__bar"><span id="claimBar" style="width:0%"></span></div>
+            <div class="claim__row"><span>WALLET</span><b id="claimWallet" class="mono">not connected</b></div>
+            <div class="claim__row"><span>$MM</span><b id="claimHold" class="mono">—</b></div>
           </div>
-          <div class="mint__row">
-            <span>MINTED</span>
-            <b><span id="mintedCount">0</span> / <span id="mintSupply">10,000</span></b>
-          </div>
-          <div class="mint__bar"><span id="mintBar" style="width:0%"></span></div>
-          <div class="mint__row mint__row--small">
-            <span>PHASE</span>
-            <b id="mintPhase" class="chip chip--amber">COMING SOON</b>
-          </div>
-
-          <div class="mint__qty">
-            <button id="qtyMinus" aria-label="Decrease">−</button>
-            <span id="qtyVal">1</span>
-            <button id="qtyPlus" aria-label="Increase">+</button>
-            <small>max 3 per wallet</small>
-          </div>
-
-          <button class="btn btn--primary btn--xl mint__btn magnetic" id="mintBtn">
+          <button class="btn btn--primary btn--xl claim__btn magnetic" id="claimBtn">
             <span class="btn__shine"></span>
-            <span id="mintBtnTxt">CONNECT WALLET</span>
+            <span id="claimBtnTxt">CONNECT WALLET</span>
           </button>
-          <p class="mint__note" id="mintNote">Phantom, Solflare or Backpack. You only sign — we never ask for keys.</p>
-        </div>
+          <p class="claim__note" id="claimNote">You only sign a message. We never ask for keys or approvals.</p>
+        </aside>
       </div>
 
-      <div class="mint__toast" id="toast"></div>
+      <div class="toast" id="toast"></div>
     </section>
 
-    <!-- ░░ FIVE WAYS ░░ -->
+    <!-- ░░ FIVE WAYS — stacking cards ░░ -->
     <section class="section ways" id="ways">
       <div class="section__head">
         <span class="section__kicker reveal">// CHAPTER 04</span>
         <h2 class="section__title reveal">THE FIVE WAYS</h2>
-        <p class="section__lead reveal">The prophecy named five paths. $MM walks all of them.</p>
+        <p class="section__lead reveal">The prophecy named five paths. $MM walks all of them. Scroll — they stack.</p>
       </div>
 
-      <div class="ways__grid">
-        <article class="way reveal" data-i="01">
-          <div class="way__n">01</div>
+      <div class="stack">
+        <article class="scard" style="--i:0">
+          <div class="scard__bg">01</div>
+          <div class="scard__ico">
+            <svg viewBox="0 0 32 32" shape-rendering="crispEdges"><rect x="4" y="12" width="8" height="8"/><rect x="20" y="12" width="8" height="8"/><rect x="12" y="15" width="8" height="2"/><rect x="14" y="4" width="4" height="4"/><rect x="14" y="24" width="4" height="4"/><rect x="8" y="8" width="4" height="4"/><rect x="20" y="8" width="4" height="4"/><rect x="8" y="20" width="4" height="4"/><rect x="20" y="20" width="4" height="4"/></svg>
+          </div>
           <h3>Referrals</h3>
           <p>Bring a ghost, earn with the ghost. Every Minted Millionaire gets a referral link. The flame spreads one friend at a time.</p>
-          <div class="way__bar"><span></span></div>
+          <span class="scard__tag">millionaires will be minted via referrals</span>
         </article>
-        <article class="way reveal" data-i="02">
-          <div class="way__n">02</div>
+        <article class="scard" style="--i:1">
+          <div class="scard__bg">02</div>
+          <div class="scard__ico">
+            <svg viewBox="0 0 32 32" shape-rendering="crispEdges"><rect x="4" y="22" width="4" height="6"/><rect x="10" y="16" width="4" height="12"/><rect x="16" y="18" width="4" height="10"/><rect x="22" y="8" width="4" height="20"/><rect x="26" y="4" width="2" height="4"/><rect x="24" y="4" width="2" height="2"/><rect x="26" y="8" width="2" height="2"/></svg>
+          </div>
           <h3>Memecoins</h3>
           <p>$MM is the coin. The ghosts are the holders. The chart is the one on the ghost's screen. We know which side of the candle we're on.</p>
-          <div class="way__bar"><span></span></div>
+          <span class="scard__tag">millionaires will be minted via memecoins</span>
         </article>
-        <article class="way reveal" data-i="03">
-          <div class="way__n">03</div>
+        <article class="scard" style="--i:2">
+          <div class="scard__bg">03</div>
+          <div class="scard__ico">
+            <svg viewBox="0 0 32 32" shape-rendering="crispEdges"><rect x="8" y="4" width="16" height="4"/><rect x="6" y="8" width="4" height="4"/><rect x="6" y="12" width="16" height="4"/><rect x="22" y="16" width="4" height="4"/><rect x="6" y="20" width="4" height="4"/><rect x="8" y="24" width="16" height="4"/><rect x="14" y="0" width="4" height="4"/><rect x="14" y="28" width="4" height="4"/></svg>
+          </div>
           <h3>Creator Fees</h3>
           <p>Fees earned by the project don't vanish into a wallet. They fuel the flame: buybacks, community rewards, the next chapter.</p>
-          <div class="way__bar"><span></span></div>
+          <span class="scard__tag">millionaires will be minted via creator fees</span>
         </article>
-        <article class="way reveal" data-i="04">
-          <div class="way__n">04</div>
+        <article class="scard" style="--i:3">
+          <div class="scard__bg">04</div>
+          <div class="scard__ico">
+            <svg viewBox="0 0 32 32" shape-rendering="crispEdges"><rect x="6" y="10" width="20" height="16"/><rect x="10" y="6" width="12" height="4"/><rect x="12" y="2" width="8" height="4"/><rect x="12" y="14" width="2" height="2" fill="#06100c"/><rect x="18" y="14" width="2" height="2" fill="#06100c"/><rect x="12" y="20" width="8" height="2" fill="#06100c"/></svg>
+          </div>
           <h3>Holder Rewards</h3>
           <p>Hold the ghost, hold the coin, get rewarded for staying. The prophecy was about the ones who didn't leave.</p>
-          <div class="way__bar"><span></span></div>
+          <span class="scard__tag">millionaires will be minted via holder rewards</span>
         </article>
-        <article class="way reveal" data-i="05">
-          <div class="way__n">05</div>
+        <article class="scard" style="--i:4">
+          <div class="scard__bg">05</div>
+          <div class="scard__ico">
+            <svg viewBox="0 0 32 32" shape-rendering="crispEdges"><rect x="4" y="12" width="8" height="8"/><rect x="12" y="8" width="4" height="16"/><rect x="16" y="4" width="4" height="24"/><rect x="24" y="12" width="2" height="8"/><rect x="28" y="8" width="2" height="16"/></svg>
+          </div>
           <h3>Callout Rewards</h3>
           <p>Post the ghost. Call out the play. Get rewarded for the signal you bring to the timeline. Loud ghosts eat first.</p>
-          <div class="way__bar"><span></span></div>
-        </article>
-        <article class="way way--cta reveal">
-          <h3>Which way<br>mints you?</h3>
-          <a href="#mint" class="btn btn--primary">START HERE</a>
+          <span class="scard__tag">millionaires will be minted via callout rewards</span>
         </article>
       </div>
     </section>
 
     <!-- ░░ PATH ░░ -->
     <section class="section path" id="path">
+      <div class="bigword bigword--right" aria-hidden="true">PATH</div>
       <div class="section__head">
         <span class="section__kicker reveal">// CHAPTER 05</span>
         <h2 class="section__title reveal">THE PATH</h2>
@@ -390,9 +457,9 @@
         <div class="tl reveal">
           <div class="tl__node"></div>
           <div class="tl__card">
-            <span class="tl__phase">PHASE 1 · THE MINT</span>
-            <h3>10,000 ghosts, free</h3>
-            <p>Free mint opens. Set your PFP. The timeline turns green.</p>
+            <span class="tl__phase">PHASE 1 · THE VAULT</span>
+            <h3>Twenty ghosts, holders only</h3>
+            <p>The vault opens. Hold $MM, pick your ghost, set your PFP. The timeline turns green.</p>
           </div>
         </div>
         <div class="tl reveal">
@@ -408,7 +475,7 @@
           <div class="tl__card">
             <span class="tl__phase">PHASE 3 · THE MINTING</span>
             <h3>Millionaires get minted</h3>
-            <p>Creator fees and holder rewards flow back to the ghosts who stayed. Prophecy fulfilled.</p>
+            <p>Creator fees and holder rewards flow back to the ghosts who stayed. More ghosts get drawn. Prophecy fulfilled.</p>
           </div>
         </div>
       </div>
@@ -420,7 +487,7 @@
         <img class="final__ghost" src="assets/mm.jpg" alt="" />
         <h2>STILL HERE?<br><span class="mint">THEN YOU'RE ONE OF US.</span></h2>
         <div class="final__cta">
-          <a href="#mint" class="btn btn--primary btn--lg magnetic"><span class="btn__shine"></span>MINT FOR FREE</a>
+          <a href="#vault" class="btn btn--primary btn--lg magnetic"><span class="btn__shine"></span>CLAIM YOUR GHOST</a>
           <a class="btn btn--ghost btn--lg magnetic" data-x-link href="#" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             JOIN ON X
@@ -446,7 +513,7 @@
       <div class="footer__links">
         <a data-x-link href="#" target="_blank" rel="noopener">X</a>
         <a href="https://pump.fun" target="_blank" rel="noopener">pump.fun</a>
-        <a href="#mint">Mint</a>
+        <a href="#vault">Vault</a>
       </div>
     </div>
     <p class="footer__disc">

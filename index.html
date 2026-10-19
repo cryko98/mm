@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minted Millionaires — $MM</title>
+  <meta name="description" content="Minted Millionaires ($MM). A free-mint NFT cult born from one tweet. Millionaires will be minted. Be one of them." />
+  <meta property="og:title" content="Minted Millionaires — $MM" />
+  <meta property="og:description" content="Millionaires will be minted. Free mint. Wear the ghost." />
+  <meta property="og:image" content="assets/mm.jpg" />
+  <meta name="theme-color" content="#06100c" />
+  <link rel="icon" type="image/jpeg" href="assets/mm.jpg" />
+  <link rel="apple-touch-icon" href="assets/mm.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ░░ LOADER ░░ -->
+  <div class="loader" id="loader">
+    <div class="loader__box">
+      <div class="loader__ghost"><img src="assets/mm.jpg" alt="" /></div>
+      <div class="loader__bar"><span id="loaderBar"></span></div>
+      <div class="loader__txt" id="loaderTxt">MINTING…</div>
+    </div>
+  </div>
+
+  <!-- ░░ BACKGROUND LAYERS ░░ -->
+  <canvas id="bgPixels" class="bg-canvas"></canvas>
+  <canvas id="bgChart" class="bg-canvas bg-canvas--chart"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- ░░ NAV ░░ -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top">
+      <span class="nav__logo"><img src="assets/mm.jpg" alt="Minted Millionaires logo" /></span>
+      <span class="nav__name">MINTED<br>MILLIONAIRES</span>
+      <span class="nav__ticker">$MM</span>
+    </a>
+    <nav class="nav__links">
+      <a href="#prophecy">Prophecy</a>
+      <a href="#cult">Cult</a>
+      <a href="#mint">Mint</a>
+      <a href="#ways">Five Ways</a>
+      <a href="#path">Path</a>
+    </nav>
+    <div class="nav__actions">
+      <a class="btn btn--x" data-x-link href="#" target="_blank" rel="noopener" aria-label="Follow on X">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>Follow</span>
+      </a>
+      <a class="btn btn--primary btn--sm" href="#mint">Free Mint</a>
+    </div>
+    <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </header>
+
+  <main id="top">
+
+    <!-- ░░ HERO ░░ -->
+    <section class="hero" id="hero">
+      <div class="hero__grid" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <div class="hero__tag reveal">
+            <span class="dot"></span> SOLANA · FREE MINT · PUMP.FUN LORE
+          </div>
+
+          <h1 class="hero__title">
+            <span class="glitch" data-text="MINTED">MINTED</span>
+            <span class="glitch glitch--2" data-text="MILLIONAIRES">MILLIONAIRES</span>
+          </h1>
+
+          <p class="hero__sub reveal">
+            One tweet. Five lines. One promise:<br>
+            <em>“millionaires will be minted.”</em><br>
+            We took it literally. Now we mint them.
+          </p>
+
+          <div class="ca reveal" id="caBox">
+            <span class="ca__label">CA</span>
+            <code class="ca__value" id="caValue">xxxxxxxxxxxxxxxxxxxxxxx</code>
+            <button class="ca__copy" id="caCopy" aria-label="Copy contract address">
+              <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m0 16H8V7h11z"/></svg>
+              <span>COPY</span>
+            </button>
+          </div>
+
+          <div class="hero__cta reveal">
+            <a href="#mint" class="btn btn--primary btn--lg magnetic">
+              <span class="btn__shine"></span>
+              MINT FOR FREE
+            </a>
+            <a href="#prophecy" class="btn btn--ghost btn--lg magnetic">READ THE PROPHECY</a>
+          </div>
+
+          <div class="hero__stats reveal">
+            <div class="stat"><span class="stat__n" data-count="10000">0</span><span class="stat__l">SUPPLY</span></div>
+            <div class="stat"><span class="stat__n">0 SOL</span><span class="stat__l">MINT PRICE</span></div>
+            <div class="stat"><span class="stat__n" data-count="5">0</span><span class="stat__l">WAYS TO BE MINTED</span></div>
+          </div>
+        </div>
+
+        <div class="hero__art">
+          <div class="ghost-stage" id="ghostStage">
+            <div class="ghost-stage__ring ring-1"></div>
+            <div class="ghost-stage__ring ring-2"></div>
+            <div class="ghost-stage__ring ring-3"></div>
+            <div class="ghost-card" id="ghostCard">
+              <div class="ghost-card__frame">
+                <img src="assets/mm.jpg" alt="Minted Millionaire ghost — the founder NFT" draggable="false" />
+                <div class="ghost-card__flame"></div>
+                <div class="ghost-card__shine"></div>
+              </div>
+              <div class="ghost-card__meta">
+                <span>MINTED MILLIONAIRE #0001</span>
+                <span class="chip chip--green">GENESIS</span>
+              </div>
+            </div>
+            <div class="float-pill p1">+4,206%</div>
+            <div class="float-pill p2">MINTED ✓</div>
+            <div class="float-pill p3">$MM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__scroll">
+        <span></span> SCROLL
+      </div>
+    </section>
+
+    <!-- ░░ MARQUEE ░░ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>millionaires will be minted via referrals</span><i>✦</i>
+        <span>millionaires will be minted via memecoins</span><i>✦</i>
+        <span>millionaires will be minted via creator fees</span><i>✦</i>
+        <span>millionaires will be minted via holder rewards</span><i>✦</i>
+        <span>millionaires will be minted via callout rewards</span><i>✦</i>
+        <span>millionaires will be minted via referrals</span><i>✦</i>
+        <span>millionaires will be minted via memecoins</span><i>✦</i>
+        <span>millionaires will be minted via creator fees</span><i>✦</i>
+        <span>millionaires will be minted via holder rewards</span><i>✦</i>
+        <span>millionaires will be minted via callout rewards</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ░░ PROPHECY / LORE ░░ -->
+    <section class="section prophecy" id="prophecy">
+      <div class="section__head">
+        <span class="section__kicker reveal">// CHAPTER 01</span>
+        <h2 class="section__title reveal">THE PROPHECY</h2>
+        <p class="section__lead reveal">
+          On <strong>October 18, 2026</strong>, at 22:58 UTC, the co-founder of pump.fun posted five lines.
+          No image. No chart. No link. Just a promise, repeated like a mantra.
+        </p>
+      </div>
+
+      <div class="prophecy__grid">
+        <article class="tweet reveal" id="tweetCard">
+          <div class="tweet__head">
+            <div class="tweet__avatar"><span>a</span></div>
+            <div class="tweet__who">
+              <div class="tweet__name">alon <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#1d9bf0" d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34m-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.36z"/></svg></div>
+              <div class="tweet__handle">@a1lon9 · co-founder @pumpfun</div>
+            </div>
+            <svg class="tweet__x" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </div>
+          <div class="tweet__body" id="tweetBody">
+            <p class="tweet__line" data-line>millionaires will be minted via <b>referrals</b></p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>memecoins</b></p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>creator fees</b></p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>holder rewards</b></p>
+            <p class="tweet__line" data-line>millionaires will be minted via <b>callout rewards</b></p>
+          </div>
+          <div class="tweet__foot">
+            <span>10:58 PM · Oct 18, 2026</span>
+            <span class="tweet__metrics"><b>197K</b> views · <b>2.3K</b> likes · <b>836</b> replies</span>
+          </div>
+          <a class="tweet__link" href="https://x.com/a1lon9/status/2111955227280633987" target="_blank" rel="noopener">View on X ↗</a>
+        </article>
+
+        <div class="lore reveal">
+          <div class="lore__block">
+            <h3>Every trench has its ghosts.</h3>
+            <p>
+              Thousands of wallets enter the trenches every day. Most leave with nothing but a story.
+              What's left behind is a ghost — a pale little thing haunting the bonding curves, watching candles it never caught.
+            </p>
+          </div>
+          <div class="lore__block">
+            <h3>But one ghost caught fire.</h3>
+            <p>
+              The night the prophecy dropped, one ghost read the five lines and refused to fade.
+              Its flame turned <span class="mint">mint green</span>. It put on headphones, poured a coffee,
+              and sat back down in front of the charts. It wasn't haunting anymore. It was <em>building</em>.
+            </p>
+          </div>
+          <div class="lore__block">
+            <h3>Minted, not born.</h3>
+            <p>
+              A Minted Millionaire is not someone who got lucky. It's the ghost that stayed.
+              Every $MM NFT is one of those ghosts — a flame that didn't go out.
+              Mint one for free. Wear it. Let the trenches know you're still here.
+            </p>
+          </div>
+          <div class="lore__sig">
+            <span class="lore__sig-line"></span>
+            <span>— from the Book of the Green Flame</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ CULT ░░ -->
+    <section class="section cult" id="cult">
+      <div class="cult__bg" aria-hidden="true"><span>CULT</span></div>
+      <div class="section__head section__head--center">
+        <span class="section__kicker reveal">// CHAPTER 02</span>
+        <h2 class="section__title reveal">EVERYONE WANTS A CULT.<br><span class="mint">NOBODY WANTS TO BUILD ONE.</span></h2>
+        <p class="section__lead reveal">
+          Every memecoin dreams of becoming a cult. A few do. The difference was never the chart —
+          it was the <strong>faces</strong>. A cult has a uniform. Ours is a ghost with a green flame.
+        </p>
+      </div>
+
+      <div class="cult__grid">
+        <div class="cult__pfp reveal">
+          <div class="xcard">
+            <div class="xcard__banner"></div>
+            <div class="xcard__avatar"><img src="assets/mm.jpg" alt="Your X profile picture — a Minted Millionaire" /></div>
+            <div class="xcard__body">
+              <div class="xcard__name">you.mm <span class="chip chip--green">MINTED</span></div>
+              <div class="xcard__handle">@your_handle</div>
+              <p class="xcard__bio">minted millionaire #<span id="pfpNum">0420</span> 👻🔥 · still here · $MM</p>
+              <div class="xcard__stats"><b>1.2K</b> Following · <b>42K</b> Followers</div>
+            </div>
+            <div class="xcard__ghost-tag">PFP READY</div>
+          </div>
+        </div>
+
+        <div class="cult__points">
+          <div class="point reveal">
+            <div class="point__ico">01</div>
+            <div>
+              <h3>Your PFP is your flag.</h3>
+              <p>Set your $MM ghost as your X profile picture. When ten thousand timelines light up with the same green flame, that's not a memecoin anymore. That's a movement.</p>
+            </div>
+          </div>
+          <div class="point reveal">
+            <div class="point__ico">02</div>
+            <div>
+              <h3>Free to join. Impossible to fake.</h3>
+              <p>The mint costs nothing but a signature. No whitelist drama, no presale, no insiders. A cult you can't buy your way into — only show up for.</p>
+            </div>
+          </div>
+          <div class="point reveal">
+            <div class="point__ico">03</div>
+            <div>
+              <h3>Recognize each other.</h3>
+              <p>See the ghost in a reply? That's a Minted Millionaire. Same trenches, same flame. Callouts, referrals, alpha — the five ways flow through the people who wear it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wall reveal" id="wall" aria-label="The wall of minted ghosts"></div>
+    </section>
+
+    <!-- ░░ MINT ░░ -->
+    <section class="section mint" id="mint">
+      <div class="section__head section__head--center">
+        <span class="section__kicker reveal">// CHAPTER 03</span>
+        <h2 class="section__title reveal">GET MINTED</h2>
+        <p class="section__lead reveal">Zero SOL. Zero excuses. One ghost per signature.</p>
+      </div>
+
+      <div class="mint__panel reveal">
+        <div class="mint__preview">
+          <div class="mint__card tilt" id="mintCard">
+            <img src="assets/mm.jpg" alt="Minted Millionaire preview" draggable="false" />
+            <div class="mint__card-glare"></div>
+            <div class="mint__card-label">
+              <span>MINTED MILLIONAIRE</span>
+              <span id="mintPreviewId">#????</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mint__form">
+          <div class="mint__row">
+            <span>PRICE</span>
+            <b class="mint">FREE <small>+ network fee</small></b>
+          </div>
+          <div class="mint__row">
+            <span>MINTED</span>
+            <b><span id="mintedCount">0</span> / <span id="mintSupply">10,000</span></b>
+          </div>
+          <div class="mint__bar"><span id="mintBar" style="width:0%"></span></div>
+          <div class="mint__row mint__row--small">
+            <span>PHASE</span>
+            <b id="mintPhase" class="chip chip--amber">COMING SOON</b>
+          </div>
+
+          <div class="mint__qty">
+            <button id="qtyMinus" aria-label="Decrease">−</button>
+            <span id="qtyVal">1</span>
+            <button id="qtyPlus" aria-label="Increase">+</button>
+            <small>max 3 per wallet</small>
+          </div>
+
+          <button class="btn btn--primary btn--xl mint__btn magnetic" id="mintBtn">
+            <span class="btn__shine"></span>
+            <span id="mintBtnTxt">CONNECT WALLET</span>
+          </button>
+          <p class="mint__note" id="mintNote">Phantom, Solflare or Backpack. You only sign — we never ask for keys.</p>
+        </div>
+      </div>
+
+      <div class="mint__toast" id="toast"></div>
+    </section>
+
+    <!-- ░░ FIVE WAYS ░░ -->
+    <section class="section ways" id="ways">
+      <div class="section__head">
+        <span class="section__kicker reveal">// CHAPTER 04</span>
+        <h2 class="section__title reveal">THE FIVE WAYS</h2>
+        <p class="section__lead reveal">The prophecy named five paths. $MM walks all of them.</p>
+      </div>
+
+      <div class="ways__grid">
+        <article class="way reveal" data-i="01">
+          <div class="way__n">01</div>
+          <h3>Referrals</h3>
+          <p>Bring a ghost, earn with the ghost. Every Minted Millionaire gets a referral link. The flame spreads one friend at a time.</p>
+          <div class="way__bar"><span></span></div>
+        </article>
+        <article class="way reveal" data-i="02">
+          <div class="way__n">02</div>
+          <h3>Memecoins</h3>
+          <p>$MM is the coin. The ghosts are the holders. The chart is the one on the ghost's screen. We know which side of the candle we're on.</p>
+          <div class="way__bar"><span></span></div>
+        </article>
+        <article class="way reveal" data-i="03">
+          <div class="way__n">03</div>
+          <h3>Creator Fees</h3>
+          <p>Fees earned by the project don't vanish into a wallet. They fuel the flame: buybacks, community rewards, the next chapter.</p>
+          <div class="way__bar"><span></span></div>
+        </article>
+        <article class="way reveal" data-i="04">
+          <div class="way__n">04</div>
+          <h3>Holder Rewards</h3>
+          <p>Hold the ghost, hold the coin, get rewarded for staying. The prophecy was about the ones who didn't leave.</p>
+          <div class="way__bar"><span></span></div>
+        </article>
+        <article class="way reveal" data-i="05">
+          <div class="way__n">05</div>
+          <h3>Callout Rewards</h3>
+          <p>Post the ghost. Call out the play. Get rewarded for the signal you bring to the timeline. Loud ghosts eat first.</p>
+          <div class="way__bar"><span></span></div>
+        </article>
+        <article class="way way--cta reveal">
+          <h3>Which way<br>mints you?</h3>
+          <a href="#mint" class="btn btn--primary">START HERE</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ░░ PATH ░░ -->
+    <section class="section path" id="path">
+      <div class="section__head">
+        <span class="section__kicker reveal">// CHAPTER 05</span>
+        <h2 class="section__title reveal">THE PATH</h2>
+        <p class="section__lead reveal">Not a roadmap. A trench map.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline__line"><span id="timelineFill"></span></div>
+        <div class="tl reveal">
+          <div class="tl__node"></div>
+          <div class="tl__card">
+            <span class="tl__phase">PHASE 0 · THE SPARK</span>
+            <h3>The prophecy drops</h3>
+            <p>Five lines on X. One ghost catches fire. $MM is born on pump.fun.</p>
+          </div>
+        </div>
+        <div class="tl reveal">
+          <div class="tl__node"></div>
+          <div class="tl__card">
+            <span class="tl__phase">PHASE 1 · THE MINT</span>
+            <h3>10,000 ghosts, free</h3>
+            <p>Free mint opens. Set your PFP. The timeline turns green.</p>
+          </div>
+        </div>
+        <div class="tl reveal">
+          <div class="tl__node"></div>
+          <div class="tl__card">
+            <span class="tl__phase">PHASE 2 · THE CULT</span>
+            <h3>Ghost-only spaces</h3>
+            <p>Holder-gated raids, callouts and referral boards. The five ways go live.</p>
+          </div>
+        </div>
+        <div class="tl reveal">
+          <div class="tl__node"></div>
+          <div class="tl__card">
+            <span class="tl__phase">PHASE 3 · THE MINTING</span>
+            <h3>Millionaires get minted</h3>
+            <p>Creator fees and holder rewards flow back to the ghosts who stayed. Prophecy fulfilled.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ FINAL CTA ░░ -->
+    <section class="final">
+      <div class="final__inner reveal">
+        <img class="final__ghost" src="assets/mm.jpg" alt="" />
+        <h2>STILL HERE?<br><span class="mint">THEN YOU'RE ONE OF US.</span></h2>
+        <div class="final__cta">
+          <a href="#mint" class="btn btn--primary btn--lg magnetic"><span class="btn__shine"></span>MINT FOR FREE</a>
+          <a class="btn btn--ghost btn--lg magnetic" data-x-link href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            JOIN ON X
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <img src="assets/mm.jpg" alt="" />
+        <div>
+          <b>MINTED MILLIONAIRES</b>
+          <span>$MM · Solana</span>
+        </div>
+      </div>
+      <div class="footer__ca">
+        <span>CA</span>
+        <code data-ca>xxxxxxxxxxxxxxxxxxxxxxx</code>
+      </div>
+      <div class="footer__links">
+        <a data-x-link href="#" target="_blank" rel="noopener">X</a>
+        <a href="https://pump.fun" target="_blank" rel="noopener">pump.fun</a>
+        <a href="#mint">Mint</a>
+      </div>
+    </div>
+    <p class="footer__disc">
+      $MM is a memecoin and an NFT collection with no intrinsic value and no expectation of financial return. It is lore, culture and a green flame. Nothing here is financial advice. The prophecy is a tweet. Stay a ghost responsibly.
+    </p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
